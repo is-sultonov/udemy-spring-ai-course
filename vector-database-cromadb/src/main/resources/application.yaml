@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: vector-database-cromadb
+
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+      embedding:
+        options:
+          model: text-embedding-ada-002
+      chat:
+        options:
+          temperature: 0.8
+
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        initialize-schema: true
