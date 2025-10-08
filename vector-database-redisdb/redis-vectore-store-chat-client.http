@@ -1,0 +1,3 @@
+### GET request to example server
+GET http://localhost:9090/api/v1/chat/redis?userPrompt=find me bikes by type Kids Mountain Bikes
+###
