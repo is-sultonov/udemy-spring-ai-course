@@ -7,7 +7,7 @@ spring:
 
   ai:
     openai:
-      api-key: 'key'
+      api-key: ${OPEN_AI_KEY}
     vectorstore:
       redis:
         initialize-schema: true
