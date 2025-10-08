@@ -1,0 +1,23 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: vector-database-redisdb
+
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+    vectorstore:
+      redis:
+        initialize-schema: true
+        index-name: custom-index
+        prefix: custom-prefix
+
+  data:
+    redis:
+#      url: http://localhost:6380
+      host: localhost
+      port: 6380
+      username: default
+      password: mypassword
