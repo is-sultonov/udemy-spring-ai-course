@@ -1,0 +1,9 @@
+### Test data status
+GET http://localhost:8080/api/v1/data/status
+Accept: application/json
+
+### Test chat endpoint
+GET http://localhost:8080/api/v1/chat/cassandra?userPrompt=find me information about Brave New World
+Accept: application/json
+
+###

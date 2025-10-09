@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: vector-database-cassandradb
+
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+    vectorstore:
+      cassandra:
+        keyspace: springframework # like database name
+        initialize-schema: true
+        table: cassandra_vector_store # table name
+        content-column-name: spring_ai_cassandra # this property is for additional column where we will be store documents properly
+        embedding-column-name: embedding # name of column where stores embeddings (data in numeric form)
+        index-name: spring_ai_cassandra_vectore_store
+
+  cassandra:
+    contact-points: 127.0.0.1:9042
+    local-datacenter: datacenter1
+
+# Vector data loading configuration
+vector:
+  data:
+    files: 
+      - "classpath:static/input.txt"
+      # - "classpath:static/articles.txt"
+      # - "file:/absolute/path/to/data.txt"
+      # - "classpath:data/books/*.txt"
