@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: image-generation-openai
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+      image:
+        options:
+          model: dall-e-3
