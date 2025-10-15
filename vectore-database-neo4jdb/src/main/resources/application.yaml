@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: vectore-database-neo4jdb
+
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+    vectorstore:
+      neo4j:
+        initialize-schema: true
+        database-name: vector_store_neo4j_demo
+        index-name: vector_store_neo4j_demo_index
+        embedding-dimension: 1536
+        distance-type: cosine
+        label: Document
+        embedding-property: embedding
+
+  neo4j:
+    authentication:
+      password: test123
+      username: neo4j
+    uri: bolt://localhost:7687
