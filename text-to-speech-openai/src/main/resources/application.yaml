@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: text-to-speech-openai
+
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+
+      # this configuration can be defined manually using options configuration during model call
+#      audio:
+#        speech:
+#          options:
+#            voice: 'echo'
+#            response-format: mp3
+#            model: 'tts-1-hd'
+#            speed: 0.95
