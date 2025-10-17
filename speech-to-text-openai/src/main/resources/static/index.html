@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional speech-to-text transcription service powered by OpenAI Whisper. Upload audio files and get accurate transcriptions in multiple formats." />
+    <meta name="keywords" content="speech to text, transcription, audio, OpenAI, Whisper, AI" />
+    <meta name="author" content="Speech-to-Text Service" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; font-src 'self'; object-src 'none'; frame-src 'none';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- Theme and appearance -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Speech-to-Text Transcription Service" />
+    <meta property="og:description" content="Professional speech-to-text transcription service powered by OpenAI Whisper" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Speech-to-Text Transcription Service" />
+    <meta property="twitter:description" content="Professional speech-to-text transcription service powered by OpenAI Whisper" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <title>Speech-to-Text Transcription Service</title>
+  </head>
+  <body>
+    <div id="root">
+      <!-- Fallback content for users with JavaScript disabled -->
+      <noscript>
+        <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+          <h1>Speech-to-Text Transcription Service</h1>
+          <p>This application requires JavaScript to function properly.</p>
+          <p>Please enable JavaScript in your browser and refresh the page.</p>
+          <div style="margin-top: 2rem; padding: 1rem; background: #f3f4f6; border-radius: 8px;">
+            <h2>Alternative Access</h2>
+            <p>You can also access our API directly:</p>
+            <ul style="text-align: left; display: inline-block;">
+              <li>POST /api/v1/speech/transcribe - Upload and transcribe audio files</li>
+              <li>GET /api/v1/speech/health - Check service status</li>
+            </ul>
+          </div>
+        </div>
+      </noscript>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

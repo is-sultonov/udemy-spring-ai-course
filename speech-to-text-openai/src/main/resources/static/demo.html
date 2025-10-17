@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech-to-Text Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .dropzone {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background-color: #fafafa;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .dropzone:hover,
+        .dropzone.drag-active {
+            border-color: #3b82f6;
+            background-color: #f8faff;
+        }
+
+        .dropzone-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .dropzone-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropzone-help {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 1rem;
+            color: #374151;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 1rem;
+            min-height: 2.5rem;
+        }
+
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .button-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .button-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .result {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #3b82f6;
+            transition: width 0.3s ease-in-out;
+            width: 0%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .success {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .dropzone {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎤 Speech-to-Text Service</h1>
+            <p class="subtitle">
+                Upload your audio file and get an accurate transcription powered by OpenAI Whisper
+            </p>
+        </div>
+
+        <div class="card">
+            <form id="transcriptionForm">
+                <div class="dropzone" id="dropzone">
+                    <div class="dropzone-icon">⬆️</div>
+                    <div class="dropzone-text">Drag and drop your audio file here, or click to select</div>
+                    <div class="dropzone-help">
+                        Supported formats: MP3, WAV, M4A, FLAC, MP4, OGG, WebM (Max 25MB)
+                    </div>
+                    <input type="file" id="fileInput" accept=".mp3,.wav,.m4a,.flac,.mp4,.oga,.ogg,.webm" style="display: none;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div class="form-group">
+                        <label for="language" class="form-label">Language (Optional)</label>
+                        <select id="language" class="form-select">
+                            <option value="">Auto-detect</option>
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="it">Italian</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru">Russian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ko">Korean</option>
+                            <option value="zh">Chinese</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="responseFormat" class="form-label">Output Format</label>
+                        <select id="responseFormat" class="form-select">
+                            <option value="json">JSON (with metadata)</option>
+                            <option value="text">Plain Text</option>
+                            <option value="srt">SRT Subtitles</option>
+                            <option value="vtt">VTT Subtitles</option>
+                            <option value="verbose_json">Verbose JSON</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="progress" class="hidden">
+                    <div>Processing your audio file...</div>
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="button button-primary" id="transcribeBtn" disabled>
+                        Transcribe Audio
+                    </button>
+                    <button type="button" class="button button-secondary" id="transcribeAsyncBtn" disabled>
+                        Transcribe (Background)
+                    </button>
+                </div>
+            </form>
+
+            <div id="messages"></div>
+
+            <div id="result" class="hidden">
+                <h3>Transcription Result</h3>
+                <div class="result">
+                    <div id="resultText" class="result-text"></div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="button button-secondary" id="copyBtn">
+                        Copy to Clipboard
+                    </button>
+                    <button type="button" class="button button-primary" id="downloadBtn">
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const form = document.getElementById('transcriptionForm');
+        const transcribeBtn = document.getElementById('transcribeBtn');
+        const transcribeAsyncBtn = document.getElementById('transcribeAsyncBtn');
+        const progress = document.getElementById('progress');
+        const progressBar = document.getElementById('progressBar');
+        const messages = document.getElementById('messages');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let selectedFile = null;
+
+        // File selection handlers
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', handleDragOver);
+        dropzone.addEventListener('dragleave', handleDragLeave);
+        dropzone.addEventListener('drop', handleDrop);
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            dropzone.classList.add('drag-active');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            dropzone.classList.remove('drag-active');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            dropzone.classList.remove('drag-active');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        }
+
+        function handleFile(file) {
+            const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/m4a', 'audio/flac', 'video/mp4', 'audio/oga', 'audio/ogg', 'audio/webm'];
+            const maxSize = 25 * 1024 * 1024; // 25MB
+
+            if (!validTypes.includes(file.type)) {
+                showMessage('Please select a valid audio file (MP3, WAV, M4A, FLAC, MP4, OGG, WebM)', 'error');
+                return;
+            }
+
+            if (file.size > maxSize) {
+                showMessage('File size must be less than 25MB', 'error');
+                return;
+            }
+
+            selectedFile = file;
+            updateDropzoneText(`Selected: ${file.name} (${formatFileSize(file.size)})`);
+            transcribeBtn.disabled = false;
+            transcribeAsyncBtn.disabled = false;
+            clearMessages();
+        }
+
+        function updateDropzoneText(text) {
+            dropzone.querySelector('.dropzone-text').textContent = text;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showMessage(text, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = text;
+            messages.appendChild(div);
+        }
+
+        function clearMessages() {
+            messages.innerHTML = '';
+        }
+
+        // Form submission
+        form.addEventListener('submit', handleSubmit);
+        transcribeAsyncBtn.addEventListener('click', () => handleSubmit(null, true));
+
+        async function handleSubmit(e, isAsync = false) {
+            if (e) e.preventDefault();
+            
+            if (!selectedFile) {
+                showMessage('Please select an audio file first', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            
+            const language = document.getElementById('language').value;
+            if (language) {
+                formData.append('language', language);
+            }
+            
+            const responseFormat = document.getElementById('responseFormat').value;
+            formData.append('responseFormat', responseFormat);
+
+            const endpoint = isAsync ? '/api/v1/speech/transcribe/async' : '/api/v1/speech/transcribe';
+            
+            transcribeBtn.disabled = true;
+            transcribeAsyncBtn.disabled = true;
+            progress.classList.remove('hidden');
+            result.classList.add('hidden');
+            clearMessages();
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ detail: 'Unknown error occurred' }));
+                    throw new Error(errorData.detail || `HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (isAsync) {
+                    showMessage('File uploaded successfully! Processing in background...', 'success');
+                } else {
+                    displayResult(data);
+                    showMessage('Transcription completed successfully!', 'success');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                transcribeBtn.disabled = false;
+                transcribeAsyncBtn.disabled = false;
+                progress.classList.add('hidden');
+                progressBar.style.width = '0%';
+            }
+        }
+
+        function displayResult(data) {
+            resultText.textContent = data.transcription || 'No transcription available';
+            result.classList.remove('hidden');
+        }
+
+        // Copy to clipboard
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(resultText.textContent);
+                showMessage('Copied to clipboard!', 'success');
+            } catch (error) {
+                showMessage('Failed to copy to clipboard', 'error');
+            }
+        });
+
+        // Download result
+        downloadBtn.addEventListener('click', () => {
+            const format = document.getElementById('responseFormat').value;
+            const text = resultText.textContent;
+            const filename = `transcription.${format === 'json' ? 'json' : 'txt'}`;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Health check on load
+        fetch('/api/v1/speech/health')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Backend health check:', data);
+            })
+            .catch(error => {
+                console.warn('Backend not available:', error);
+                showMessage('Backend service is not available. Please ensure the Spring Boot application is running on port 8080.', 'error');
+            });
+    </script>
+</body>
+</html>
