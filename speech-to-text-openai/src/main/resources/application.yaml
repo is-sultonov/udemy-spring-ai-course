@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: speech-to-text-openai
+  
+  profiles:
+    active: ${SPRING_PROFILE:default}
+  
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+      enabled: true
+
+  ai:
+    model:
+      audio:
+        transcription: openai
+    openai:
+      api-key: ${OPEN_AI_KEY}
+      audio:
+        transcription:
+          options:
+            model: whisper-1
+            response-format: json
+            temperature: 0.0
+
+# Application-specific configuration
+app:
+  audio:
+    max-file-size: 26214400  # 25MB in bytes
+    allowed-formats: mp3,wav,m4a,flac,mp4,mpeg,mpga,oga,ogg,webm
+    processing-timeout: 300000  # 5 minutes in milliseconds
+
+
+# Logging configuration
+logging:
+  level:
+    org.spring.ai.speech: DEBUG
+    org.springframework.ai: INFO
+    org.springframework.web.multipart: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoint:
+    health:
+      show-details: never
+
+speech:
+  audio:
+    file: classpath:speech-1760589387683.mp3

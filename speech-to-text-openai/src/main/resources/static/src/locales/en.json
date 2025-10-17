@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "Speech to Text",
+    "footer": "© {{year}} Speech-to-Text Service. All rights reserved."
+  },
+  "navigation": {
+    "main": "Main navigation",
+    "transcribe": "Transcribe",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Try Again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "download": "Download"
+  },
+  "fileUpload": {
+    "dropzoneLabel": "Upload audio file",
+    "dropHere": "Drop your audio file here",
+    "dragOrClick": "Drag and drop your audio file here, or click to select",
+    "supportedFormats": "Supported formats: {{formats}}. Max size: {{maxSize}}",
+    "removeFile": "Remove file",
+    "dragActiveAnnouncement": "File is ready to be dropped",
+    "fileSelectedAnnouncement": "File {{fileName}} selected"
+  },
+  "transcriptionForm": {
+    "audioFile": "Audio File",
+    "language": "Language",
+    "selectLanguage": "Select language (optional)",
+    "languageHelp": "Leave empty for automatic language detection",
+    "responseFormat": "Output Format",
+    "formatHelp": "Choose how you want to receive the transcription",
+    "transcribe": "Transcribe Audio",
+    "transcribeAsync": "Transcribe (Background)",
+    "processing": "Processing...",
+    "progressLabel": "Upload progress: {{progress}}%",
+    "formHelp": "Upload an audio file and select your preferred options to get started."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "generic": "An unexpected error occurred. Please try again.",
+    "retry": "Try Again",
+    "fileSize": "File size must be less than {{maxSize}}",
+    "fileFormat": "Unsupported file format",
+    "network": "Network error. Please check your connection.",
+    "timeout": "Request timed out. Please try again."
+  },
+  "transcription": {
+    "result": "Transcription Result",
+    "confidence": "Confidence: {{confidence}}%",
+    "duration": "Duration: {{duration}}s",
+    "language": "Detected Language: {{language}}",
+    "model": "Model: {{model}}",
+    "downloadText": "Download as Text",
+    "downloadSrt": "Download as SRT",
+    "downloadVtt": "Download as VTT",
+    "copyToClipboard": "Copy to Clipboard",
+    "copied": "Copied to clipboard!"
+  }
+}

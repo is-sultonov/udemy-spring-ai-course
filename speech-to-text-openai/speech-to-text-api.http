@@ -1,0 +1,81 @@
+### Speech-to-Text OpenAI API Testing
+
+### Health Check
+GET http://localhost:8080/api/v1/speech/health
+Accept: application/json
+
+### Transcribe Resource File (Legacy endpoint)
+GET http://localhost:8080/api/v1/speech/resource
+
+### Transcribe Resource File (New endpoint)
+GET http://localhost:8080/api/v1/speech/transcribe/resource
+Accept: application/json
+
+### Transcribe Resource File with custom filename
+GET http://localhost:8080/api/v1/speech/transcribe/resource?filename=speech-1760589387683.mp3
+Accept: application/json
+
+### Upload and Transcribe Audio File
+POST http://localhost:8080/api/v1/speech/transcribe
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio.mp3"
+Content-Type: audio/mpeg
+
+< /path/to/your/audio/file.mp3
+--boundary
+Content-Disposition: form-data; name="language"
+
+en
+--boundary
+Content-Disposition: form-data; name="responseFormat"
+
+json
+--boundary--
+
+### Upload and Transcribe Audio File (Async)
+POST http://localhost:8080/api/v1/speech/transcribe/async
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio.mp3"
+Content-Type: audio/mpeg
+
+< /path/to/your/audio/file.mp3
+--boundary
+Content-Disposition: form-data; name="language"
+
+en
+--boundary
+Content-Disposition: form-data; name="responseFormat"
+
+verbose_json
+--boundary--
+
+### Check Actuator Health
+GET http://localhost:8080/actuator/health
+Accept: application/json
+
+### Check Actuator Metrics
+GET http://localhost:8080/actuator/metrics
+Accept: application/json
+
+### Check Specific Metric (transcription requests)
+GET http://localhost:8080/actuator/metrics/transcription.requests.total
+Accept: application/json
+
+### Check Prometheus Metrics
+GET http://localhost:8080/actuator/prometheus
+Accept: text/plain
+
+### Test Invalid File Upload (should return error)
+POST http://localhost:8080/api/v1/speech/transcribe
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="document.txt"
+Content-Type: text/plain
+
+This is not an audio file
+--boundary--

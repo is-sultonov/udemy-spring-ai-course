@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(~/.zshrc)",
+      "Read(//Users/isfandiyorsultonov/IdeaProjects/learning/spring-ai/**)",
+      "Write(//Users/isfandiyorsultonov/IdeaProjects/learning/spring-ai/**)",
+      "Edit(//Users/isfandiyorsultonov/IdeaProjects/learning/spring-ai/**)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}
