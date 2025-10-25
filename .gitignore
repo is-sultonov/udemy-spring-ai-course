@@ -127,3 +127,4 @@ yarn-error.log*
 # Course-specific ignores
 course-notes-private/
 personal-api-keys.txt
+.claude/settings.local.json
